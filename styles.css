@@ -1,0 +1,103 @@
+/*Google fonts*/
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:wght@400..900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+*{
+    font-family: "Lora", serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    scroll-padding-top: 2rem;
+    scroll-behavior: smooth;
+}
+
+/*Variables*/
+:root {
+    --main-color: #ff2c1f;
+    --text-color: #020307;
+    --bg-color: #fff;
+}
+body{
+    background: #020307;
+    color: #fff;
+}
+header{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+   
+    padding: 20px 100px;
+    transition: .5s;
+   /* background-color: #ff2c1f;*/
+}
+/*header.sticky{
+    background: var(--bg-color);
+    padding: 20px 12%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}*/
+
+.logo{
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--bg-color);
+    display: flex;
+    align-items: center;
+    column-gap: .5rem;
+}
+.logo .bx{
+    font-size: 24px;
+    color: var(--main-color);
+}
+ 
+.navbar{
+    display: flex;
+    column-gap: 5rem;
+}
+.navbar li{
+    position: relative;
+}
+.navbar a{
+    color: var(--bg-color);
+    font-size: 1rem;
+    /*padding: 10px 10px;*/
+    font-weight: 500;
+}
+.navbar a::after{
+    content: '';
+    width: 100;
+    height: 2px;
+    background: var(--main-color);
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    transition: .5s all linear;
+}
+.navbar a:hover::after{
+    width: 100%;
+    transform: scaleX(0);
+}
+.navbar a:hover{
+    background: var(--main-color);
+    transition: .4s;
+}
+#menu-icon{
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10001;
+    display: none;
+}
+.btn{
+    padding: .7rem 1.4rem;
+    border-radius: 0.5rem;
+    background: var(--main-color);
+    color: var(--bg-color);
+    font-weight: 400;
+}
+.btn:hover{
+    background: #fa1216;
+}
