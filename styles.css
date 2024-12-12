@@ -17,10 +17,14 @@
     --text-color: #020307;
     --bg-color: #fff;
 }
+  
 body{
     background: #020307;
     color: #fff;
 }
+section{
+    padding: 50px 100px;
+} 
 header{
     position: fixed;
     width: 100%;
@@ -30,19 +34,19 @@ header{
     display: flex;
     align-items: center;
     justify-content: space-between;
-   
     padding: 20px 100px;
     transition: .5s;
+    background-color: rgba(28, 28, 28, 0.9);
    /* background-color: #ff2c1f;*/
 }
-/*header.sticky{
+header.sticky{
     background: var(--bg-color);
     padding: 20px 12%;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-}*/
+}
 
 .logo{
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: var(--bg-color);
     display: flex;
@@ -50,7 +54,7 @@ header{
     column-gap: .5rem;
 }
 .logo .bx{
-    font-size: 24px;
+    font-size: 25px;
     color: var(--main-color);
 }
  
@@ -63,9 +67,10 @@ header{
 }
 .navbar a{
     color: var(--bg-color);
-    font-size: 1rem;
+    font-size: 1.5rem;
     /*padding: 10px 10px;*/
     font-weight: 500;
+    border-radius: 5px;
 }
 .navbar a::after{
     content: '';
@@ -76,10 +81,12 @@ header{
     bottom: -4px;
     left: 0;
     transition: .5s all linear;
+    
 }
 .navbar a:hover::after{
     width: 100%;
     transform: scaleX(0);
+    
 }
 .navbar a:hover{
     background: var(--main-color);
@@ -100,4 +107,348 @@ header{
 }
 .btn:hover{
     background: #fa1216;
+}
+.conatiner{
+    max-width: 100%;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgb(2,3,7,0.4);
+ }
+
+.conatiner img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -1;
+}
+
+.swiper-pagination-bullet{
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 0.2rem !important;
+    background: var(--bg-color) !important;
+    opacity: 1 !important;
+}
+.swiper-pagination-bullet-active{
+    width: 1.5rem !important;
+    background: var(--main-color) !important;
+}
+.home-text{
+    padding: 0 150PX;
+    color: #fff;
+    z-index: 1000;
+    font-size: 1.5rem;
+    margin-top: 350px;
+    
+}
+
+.home-text span{
+    color: var(--bg-color);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.home-text h1{
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--bg-color);
+}
+.home-text p{
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    color: var(--bg-color);
+}
+.play{
+    position: absolute;
+    right: 4rem;
+    bottom: 10%;
+    
+}
+.play .bx{
+    background: var(--bg-color);
+    font-size: 2rem;
+    padding: 10px;
+    border-radius: 50%;
+    border: 4px solid rgb(2,3,7,0.4);
+    color: var(--main-color);
+}
+.play .bx:hover{    
+   background-color: var(--main-color);
+   color: var(--bg-color);
+   transition: .2s all linear;
+}
+.heading{
+    max-width: 968px;
+    margin: auto;
+    margin-right: auto;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--main-color);
+}
+.heading span{
+    color: var(--main-color);
+}
+/*Peliculas*/
+.movies-container{
+    max-width: 968px;
+    margin-right: auto;
+    margin-left: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, auto));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}/*No se enoje profe, no me gusto como se veia en el video 
+    y busque una alternativa que me gusta*/
+.movies-container .box{
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.movies-container .box img{
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center;
+}
+.movies-container .box .box-img{
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}
+.movies-container .box .box-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: .5s ease;
+}
+.movies-container .box:hover .box-img img{
+    transform: scale(1.1);   
+}
+.box h3{
+   font-size: 0.9rem;
+   font-weight: 600;   
+}
+.box span{
+    font-size: 1rem;
+}
+/*proximamente*/
+.coming-soon {
+    margin-top: 2rem;
+}
+
+.coming-container {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    gap: 1.5rem;
+}
+
+.coming-container .box {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.coming-container .box img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease; 
+}
+
+.coming-container .box:hover img {
+    transform: scale(1.1);
+}
+
+.coming-container .box:hover {
+    transform: translateY(-5px); 
+}
+
+.coming-container a:hover {
+    align-content: center; 
+}
+.swiper {
+    width: 100%;
+    height: 100%; /* Ajusta según tus necesidades */
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    width: 100%; /* Asegúrate de que las imágenes ocupen todo el ancho del slide */
+    height: auto; /* Mantiene la proporción de la imagen */
+    object-fit: cover; /* Asegura que la imagen cubra todo el espacio disponible */
+}
+/*Novedades*/
+.newsletter {
+    background-color: #1c1c1c; 
+    color: #ffffff; 
+    padding: 60px 20px; 
+    text-align: center; 
+    border-radius: 20px; 
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); 
+    margin: 40px 70px; 
+}
+
+
+.newsletter-container {
+    max-width: 600px;
+    margin: auto; 
+}
+
+
+.newsletter h2 {
+    font-size: 2.5rem; 
+    margin-bottom: 10px; 
+}
+
+
+.newsletter span {
+    color: #ff6600; 
+    font-weight: bold;
+}
+
+
+.newsletter p {
+    font-size: 1.1rem; 
+    margin-bottom: 20px; 
+}
+
+
+.newsletter form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+
+.newsletter input[type="email"] {
+    padding: 15px; 
+    border: none; 
+    border-radius: 50px; 
+    width: 100%; 
+    max-width: 350px; 
+    margin-right: 10px; 
+    font-size: 1rem; 
+    color: #ffffff; 
+    background-color: #333333;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+}
+
+
+.newsletter input[type="email"]:hover {
+    background-color: #444444; 
+    box-shadow: 0 0 10px rgba(255, 102, 0, 0.8); 
+    cursor: pointer; 
+}
+
+.newsletter input[type="email"] {
+    padding: 15px; 
+    border: none; 
+    border-radius: 50px; 
+    width: 100%; 
+    max-width: 350px; 
+    margin-right: 10px; 
+    font-size: 1rem; 
+    color: #ffffff; 
+    background-color: #333333;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+    outline: none; 
+}
+
+
+.newsletter input[type="email"]:hover {
+    background-color: #444444; 
+    box-shadow: 0 0 10px rgba(255, 102, 0, 0.8); 
+    cursor: pointer; 
+}
+
+
+.newsletter input[type="email"]:focus {
+    background-color: #444444; 
+    box-shadow: 0 0 15px rgba(255, 102, 0, 1); 
+}
+
+/*Footer*/
+.footer {
+    background-color: #1c1c1c; /* Fondo negro oscuro */
+    color: #ffffff; /* Color del texto blanco */
+    padding: 40px 20px; /* Espaciado interno */
+    text-align: center; /* Centrar texto */
+}
+
+.box-container {
+    display: flex; /* Usar flexbox para alinear los elementos en fila */
+    justify-content: space-around; /* Espacio entre las cajas */
+    flex-wrap: wrap; /* Permitir que las cajas se ajusten en varias líneas si es necesario */
+    margin-bottom: 20px; /* Espacio debajo del contenedor de cajas */
+}
+
+.box {
+    flex: 1; /* Permitir que cada caja tome espacio igual */
+    min-width: 200px; /* Ancho mínimo para cada caja */
+    margin: 10px; /* Margen alrededor de cada caja */
+}
+
+.box h3 {
+    font-size: 1.5rem; /* Tamaño de fuente del título de las cajas */
+    margin-bottom: 15px; /* Espacio debajo del título */
+    color: #ff6600; /* Color naranja para los títulos */
+}
+
+.box a {
+    display: block; /* Hacer que cada enlace ocupe toda la línea */
+    color: #ffffff; /* Color del texto de los enlaces */
+    text-decoration: none; /* Sin subrayado en los enlaces */
+    margin: 5px 0; /* Espacio entre los enlaces */
+    transition: color 0.3s ease; /* Transición suave para el color del enlace */
+}
+
+.box a:hover {
+    color: #ff6600; /* Cambiar a naranja al pasar el cursor sobre el enlace */
+}
+
+.footer p {
+    margin-top: 20px; /* Espacio encima del texto de derechos reservados */
+    font-size: 0.9rem; /* Tamaño de fuente más pequeño para el texto de derechos reservados */
+}
+
+/* Estilo para el nombre del sitio en derechos reservados */
+.footer span {
+    font-weight: bold; /* Negrita para el nombre del sitio */
+}
+/* Estilos para dispositivos móviles */
+@media (max-width: 568px) {
+    body {
+        font-size: 14px; /* Tamaño de fuente más pequeño para móviles */
+    }
+}
+
+/* Estilos para tabletas */
+@media (min-width: 569px) and (max-width: 768px) {
+    body {
+        font-size: 15px; /* Tamaño de fuente intermedio para tabletas */
+    }
+}
+
+/* Estilos para computadoras de escritorio */
+@media (min-width: 769px) {
+    body {
+        font-size: 16px; /* Tamaño de fuente estándar para escritorios */
+    }
 }
