@@ -279,7 +279,7 @@ header.sticky{
 }
 .swiper {
     width: 100%;
-    height: 100%; /* Ajusta según tus necesidades */
+    height: 100%; 
 }
 
 .swiper-slide {
@@ -289,9 +289,9 @@ header.sticky{
 }
 
 .swiper-slide img {
-    width: 100%; /* Asegúrate de que las imágenes ocupen todo el ancho del slide */
-    height: auto; /* Mantiene la proporción de la imagen */
-    object-fit: cover; /* Asegura que la imagen cubra todo el espacio disponible */
+    width: 100%; 
+    height: auto; 
+    object-fit: cover; 
 }
 /*Novedades*/
 .newsletter {
@@ -386,51 +386,51 @@ header.sticky{
 
 /*Footer*/
 .footer {
-    background-color: #1c1c1c; /* Fondo negro oscuro */
-    color: #ffffff; /* Color del texto blanco */
-    padding: 40px 20px; /* Espaciado interno */
-    text-align: center; /* Centrar texto */
+    background-color: #1c1c1c; 
+    color: #ffffff; 
+    padding: 40px 20px; 
+    text-align: center; 
 }
 
 .box-container {
-    display: flex; /* Usar flexbox para alinear los elementos en fila */
-    justify-content: space-around; /* Espacio entre las cajas */
-    flex-wrap: wrap; /* Permitir que las cajas se ajusten en varias líneas si es necesario */
-    margin-bottom: 20px; /* Espacio debajo del contenedor de cajas */
+    display: flex; 
+    justify-content: space-around;
+    flex-wrap: wrap; 
+    margin-bottom: 20px; 
 }
 
 .box {
-    flex: 1; /* Permitir que cada caja tome espacio igual */
-    min-width: 200px; /* Ancho mínimo para cada caja */
-    margin: 10px; /* Margen alrededor de cada caja */
+    flex: 1; 
+    min-width: 200px; 
+    margin: 10px; 
 }
 
 .box h3 {
-    font-size: 1.5rem; /* Tamaño de fuente del título de las cajas */
-    margin-bottom: 15px; /* Espacio debajo del título */
-    color: #ff6600; /* Color naranja para los títulos */
+    font-size: 1.5rem; 
+    margin-bottom: 15px; 
+    color: #ff6600; 
 }
 
 .box a {
-    display: block; /* Hacer que cada enlace ocupe toda la línea */
-    color: #ffffff; /* Color del texto de los enlaces */
-    text-decoration: none; /* Sin subrayado en los enlaces */
-    margin: 5px 0; /* Espacio entre los enlaces */
-    transition: color 0.3s ease; /* Transición suave para el color del enlace */
+    display: block; 
+    color: #ffffff; 
+    text-decoration: none; 
+    margin: 5px 0; 
+    transition: color 0.3s ease; 
 }
 
 .box a:hover {
-    color: #ff6600; /* Cambiar a naranja al pasar el cursor sobre el enlace */
+    color: #ff6600;
 }
 
 .footer p {
-    margin-top: 20px; /* Espacio encima del texto de derechos reservados */
-    font-size: 0.9rem; /* Tamaño de fuente más pequeño para el texto de derechos reservados */
+    margin-top: 20px; 
+    font-size: 0.9rem; 
 }
 
-/* Estilo para el nombre del sitio en derechos reservados */
+
 .footer span {
-    font-weight: bold; /* Negrita para el nombre del sitio */
+    font-weight: bold; 
 }
 /* Estilos para dispositivos móviles */
 @media (max-width: 568px) {
