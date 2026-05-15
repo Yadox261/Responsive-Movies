@@ -40,9 +40,10 @@ header{
    /* background-color: #ff2c1f;*/
 }
 header.sticky{
-    background: var(--bg-color);
-    padding: 20px 12%;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    background: #020307;
+    padding: 10px 100px;
+    box-shadow: 0 5px 10px rgba(255, 44, 31, 0.3); /* Sutil sombra roja */
+    border-bottom: 1px solid var(--main-color);
 }
 
 .logo{

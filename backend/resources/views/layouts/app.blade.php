@@ -29,7 +29,7 @@
         $Links = [
             [
                 'icon' => 'fa-solid fa-gauge',
-                'name' => 'Dashboard',
+                'name' => 'Panel Admin',
                 'href' => route('dashboard'),
                 'active' => request()->routeIs('dashboard'),
             ],
@@ -41,6 +41,21 @@
                 'icon' => 'fa-solid fa-film',
                 'href' => route('movies.index'),
                 'active' => request()->routeIs('movies.index'),
+            ],
+            [
+                'header' => 'ADMINISTRACIÓN',
+            ],
+            [
+                'name' => 'Usuarios',
+                'icon' => 'fa-solid fa-users',
+                'href' => route('users.index'),
+                'active' => request()->routeIs('users.index'),
+            ],
+            [
+                'name' => 'Roles',
+                'icon' => 'fa-solid fa-user-shield',
+                'href' => route('roles.index'),
+                'active' => request()->routeIs('roles.index'),
             ],
         ];
     @endphp
@@ -133,9 +148,22 @@
         <!-- FIX 2: mt-16 (64px) en lugar de mt-40 (160px) -->
         <div class="p-4 sm:ml-64 mt-16">
             <main>
+                @include('partials.breadcrumbs')
                 {{ $slot }}
             </main>
         </div>
+
+        <script>
+            @if(session('swal'))
+                window.addEventListener('DOMContentLoaded', () => {
+                    Swal.fire({
+                        title: "{{ session('swal')['title'] }}",
+                        text: "{{ session('swal')['text'] }}",
+                        icon: "{{ session('swal')['icon'] }}"
+                    });
+                });
+            @endif
+        </script>
         {{-- FIX 3: Se eliminó el </div> huérfano que estaba aquí --}}
 
         @stack('modals')

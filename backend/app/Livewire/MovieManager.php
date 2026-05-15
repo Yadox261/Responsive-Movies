@@ -11,16 +11,49 @@ class MovieManager extends Component
 {
     use WithFileUploads;
 
-    public $movies, $title, $director, $release_year, $genre, $synopsis, $movie_id;
+    public $movies, $title, $director, $cast, $release_year, $genre, $duration, $synopsis, $movie_id;
     public $poster, $banner, $poster_url, $banner_url;
     public $isOpen = false;
+    public $status = 'todos';
 
     protected $listeners = ['deleteMovie' => 'delete'];
 
     public function render()
     {
-        $this->movies = Movie::all();
+        $query = Movie::query();
+
+        if ($this->status == 'archivadas') {
+            $query->where('is_archived', true);
+        } else {
+            $query->where('is_archived', false);
+            
+            if ($this->status == 'cartelera') {
+                $query->where('release_year', '<=', 2026);
+            } elseif ($this->status == 'proximamente') {
+                $query->where('release_year', '>', 2026);
+            }
+        }
+
+        $this->movies = $query->get();
         return view('livewire.movie-manager')->layout('layouts.app');
+    }
+
+    public function toggleArchive($id)
+    {
+        $movie = Movie::findOrFail($id);
+        $movie->is_archived = !$movie->is_archived;
+        $movie->save();
+
+        $this->dispatch('swal:modal', [
+            'title' => $movie->is_archived ? '¡Archivada!' : '¡Restaurada!',
+            'text' => $movie->is_archived ? 'Película movida al archivo.' : 'Película devuelta a cartelera.',
+            'icon' => 'success'
+        ]);
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
     public function create()

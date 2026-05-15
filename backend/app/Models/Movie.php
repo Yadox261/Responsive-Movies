@@ -16,5 +16,10 @@ class Movie extends Model
         'synopsis',
         'poster_url',
         'banner_url',
+        'is_archived',
+    ];
+
+    protected $casts = [
+        'is_archived' => 'boolean',
     ];
 }

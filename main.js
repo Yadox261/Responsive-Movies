@@ -11,29 +11,28 @@ async function fetchMovies() {
     const moviesList = document.getElementById("movies-list");
     const comingList = document.getElementById("coming-list");
 
-    // Limpiar contenedores
-    homeWrapper.innerHTML = "";
-    moviesList.innerHTML = "";
-    comingList.innerHTML = "";
+    let homeHTML = "";
+    let trendingHTML = "";
+    let comingHTML = "";
 
     movies.forEach((movie) => {
       // 1. Inyectar en el Slider Principal (Solo si tiene Banner)
       if (movie.banner_url) {
-        homeWrapper.innerHTML += `
+        homeHTML += `
             <div class="swiper-slide container">
                 <img src="${movie.banner_url}" alt="${movie.title}">
                 <div class="home-text">
                     <span> World of Movies </span>
                     <h1>${movie.title}</h1>
-                    <a href="#" class="btn">Book Now</a>
-                    <a href="#" class="play"> <i class='bx bx-play'></i></a>
+                    <a href="javascript:void(0)" class="btn" style="opacity: 0.7; cursor: not-allowed;">Book Now</a>
+                    <a href="javascript:void(0)" class="play" style="cursor: not-allowed;"> <i class='bx bx-play'></i></a>
                 </div>
             </div>`;
       }
 
       // 2. Clasificar entre Trending y Coming Soon
-      const movieHTML = `
-          <div class="swiper-slide box">
+      const movieBoxHTML = `
+          <div class="swiper-slide box" style="cursor: default;">
               <div class="box-img">
                   <img src="${movie.poster_url || 'img/default.jpg'}" alt="${movie.title}">
               </div>
@@ -41,11 +40,10 @@ async function fetchMovies() {
               <span>${movie.duration || 'N/A'} | ${movie.genre}</span> 
           </div>`;
 
-      if (parseInt(movie.release_year) >= 2025) {
-        comingList.innerHTML += movieHTML;
+      if (parseInt(movie.release_year) > 2026) {
+        comingHTML += movieBoxHTML;
       } else {
-        // En Trending no usamos swiper-slide por tu CSS original
-        moviesList.innerHTML += `
+        trendingHTML += `
           <div class="box">
               <div class="box-img">
                   <img src="${movie.poster_url || 'img/default.jpg'}" alt="${movie.title}">
@@ -55,6 +53,10 @@ async function fetchMovies() {
           </div>`;
       }
     });
+
+    homeWrapper.innerHTML = homeHTML;
+    moviesList.innerHTML = trendingHTML;
+    comingList.innerHTML = comingHTML;
 
     // Inicializar Swipers después de inyectar todo el HTML
     initSwipers();
@@ -74,6 +76,8 @@ function initSwipers() {
     autoplay: { delay: 4000, disableOnInteraction: false },
     loop: true,
     pagination: { el: ".swiper-pagination", clickable: true },
+    observer: true,
+    observeParents: true,
   });
 
   comingSwiper = new Swiper(".coming-container", {
@@ -86,7 +90,15 @@ function initSwipers() {
       768: { slidesPerView: 4 },
       1024: { slidesPerView: 5 },
     },
+    observer: true,
+    observeParents: true,
   });
 }
+
+// Sticky Header
+let header = document.querySelector('header');
+window.addEventListener('scroll', () => {
+    header.classList.toggle('sticky', window.scrollY > 0);
+});
 
 document.addEventListener("DOMContentLoaded", fetchMovies);
