@@ -12,7 +12,7 @@ class MovieSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Movie::updateOrCreate(['title' => 'Inception'], [
+        $inception = \App\Models\Movie::updateOrCreate(['title' => 'Inception'], [
             'director' => 'Christopher Nolan',
             'release_year' => 2010,
             'genre' => 'Sci-Fi',
@@ -21,7 +21,16 @@ class MovieSeeder extends Seeder
             'poster_url' => 'https://example.com/inception.jpg'
         ]);
 
-        \App\Models\Movie::updateOrCreate(['title' => 'The Matrix'], [
+        $inception->schedules()->updateOrCreate(
+            ['time' => '16:00', 'room' => 'Sala 1'],
+            ['day' => 'Lunes a Viernes', 'format' => '2D SUB']
+        );
+        $inception->schedules()->updateOrCreate(
+            ['time' => '20:30', 'room' => 'Sala 2'],
+            ['day' => 'Fin de Semana', 'format' => '3D ESP']
+        );
+
+        $matrix = \App\Models\Movie::updateOrCreate(['title' => 'The Matrix'], [
             'director' => 'Lana Wachowski, Lilly Wachowski',
             'release_year' => 1999,
             'genre' => 'Action',
@@ -30,7 +39,16 @@ class MovieSeeder extends Seeder
             'poster_url' => 'https://example.com/matrix.jpg'
         ]);
 
-        \App\Models\Movie::updateOrCreate(['title' => 'Interstellar'], [
+        $matrix->schedules()->updateOrCreate(
+            ['time' => '14:30', 'room' => 'Sala 3'],
+            ['day' => 'Todos los días', 'format' => '2D ESP']
+        );
+        $matrix->schedules()->updateOrCreate(
+            ['time' => '18:00', 'room' => 'Sala 3'],
+            ['day' => 'Todos los días', 'format' => '2D SUB']
+        );
+
+        $interstellar = \App\Models\Movie::updateOrCreate(['title' => 'Interstellar'], [
             'director' => 'Christopher Nolan',
             'release_year' => 2014,
             'genre' => 'Adventure',
@@ -39,7 +57,16 @@ class MovieSeeder extends Seeder
             'poster_url' => 'https://example.com/interstellar.jpg'
         ]);
 
-        \App\Models\Movie::updateOrCreate(['title' => 'Deadpool & Wolverine'], [
+        $interstellar->schedules()->updateOrCreate(
+            ['time' => '17:00', 'room' => 'Sala IMAX'],
+            ['day' => 'Lunes a Viernes', 'format' => 'IMAX SUB']
+        );
+        $interstellar->schedules()->updateOrCreate(
+            ['time' => '21:00', 'room' => 'Sala IMAX'],
+            ['day' => 'Fin de Semana', 'format' => 'IMAX SUB']
+        );
+
+        $deadpool = \App\Models\Movie::updateOrCreate(['title' => 'Deadpool & Wolverine'], [
             'director' => 'Shawn Levy',
             'release_year' => 2025,
             'genre' => 'Action/Sci-Fi',
@@ -48,5 +75,18 @@ class MovieSeeder extends Seeder
             'poster_url' => 'posters/Et9n7bowyyOVcATdeygTi1qPhjFuHUsfHaY6i9sH.jpg',
             'banner_url' => 'banners/xcQifgEI2MVzFPjYM4wrNsl5DfTO9HovUblLgplN.jpg'
         ]);
+
+        $deadpool->schedules()->updateOrCreate(
+            ['time' => '15:30', 'room' => 'Sala 5'],
+            ['day' => 'Todos los días', 'format' => '2D ESP']
+        );
+        $deadpool->schedules()->updateOrCreate(
+            ['time' => '18:45', 'room' => 'Sala 4'],
+            ['day' => 'Todos los días', 'format' => '3D ESP']
+        );
+        $deadpool->schedules()->updateOrCreate(
+            ['time' => '22:00', 'room' => 'Sala 4'],
+            ['day' => 'Fin de Semana', 'format' => '2D SUB']
+        );
     }
 }

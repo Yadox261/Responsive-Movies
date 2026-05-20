@@ -8,12 +8,24 @@
         </li>
         @php
             $segments = request()->segments();
-            $url = '';
-        @endphp
-        @foreach($segments as $index => $segment)
-            @php
-                $url .= '/' . $segment;
-                $isLast = ($index == count($segments) - 1);
+            $displaySegments = [];
+            $tempUrl = '';
+            
+            foreach($segments as $segment) {
+                if ($segment == 'movies') {
+                    $tempUrl = '/movies-admin';
+                } elseif ($segment == 'users') {
+                    $tempUrl = '/users-admin';
+                } elseif ($segment == 'roles') {
+                    $tempUrl = '/roles-admin';
+                } else {
+                    $tempUrl .= '/' . $segment;
+                }
+
+                if (is_numeric($segment)) {
+                    continue;
+                }
+
                 $name = match($segment) {
                     'admin' => 'Panel',
                     'movies-admin' => 'Películas',
@@ -24,21 +36,31 @@
                     'movies' => 'Películas',
                     'users' => 'Usuarios',
                     'roles' => 'Roles',
-                    default => is_numeric($segment) ? '#' . $segment : ucfirst($segment)
+                    default => ucfirst($segment)
                 };
+
+                if ($segment != 'admin') {
+                    $displaySegments[] = [
+                        'name' => $name,
+                        'url' => $tempUrl,
+                    ];
+                }
+            }
+        @endphp
+        @foreach($displaySegments as $index => $item)
+            @php
+                $isLast = ($index == count($displaySegments) - 1);
             @endphp
-            @if($segment != 'admin')
-                <li>
-                    <div class="flex items-center">
-                        <i class="fa-solid fa-chevron-right text-gray-400 text-[10px] mx-2"></i>
-                        @if($isLast)
-                            <span class="text-sm font-bold text-red-600">{{ $name }}</span>
-                        @else
-                            <a href="{{ url($url) }}" class="text-sm font-medium text-gray-700 hover:text-red-600">{{ $name }}</a>
-                        @endif
-                    </div>
-                </li>
-            @endif
+            <li>
+                <div class="flex items-center">
+                    <i class="fa-solid fa-chevron-right text-gray-400 text-[10px] mx-2"></i>
+                    @if($isLast)
+                        <span class="text-sm font-bold text-red-600">{{ $item['name'] }}</span>
+                    @else
+                        <a href="{{ url($item['url']) }}" class="text-sm font-medium text-gray-700 hover:text-red-600">{{ $item['name'] }}</a>
+                    @endif
+                </div>
+            </li>
         @endforeach
     </ol>
 </nav>

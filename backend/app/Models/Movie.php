@@ -17,9 +17,16 @@ class Movie extends Model
         'poster_url',
         'banner_url',
         'is_archived',
+        'is_premiere',
     ];
 
     protected $casts = [
         'is_archived' => 'boolean',
+        'is_premiere' => 'boolean',
     ];
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
 }

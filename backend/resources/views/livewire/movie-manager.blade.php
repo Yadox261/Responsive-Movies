@@ -20,6 +20,16 @@
                 </a>
             </div>
 
+            <!-- Buscador Avanzado Estilo Premium -->
+            <div class="mb-6">
+                <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
+                        <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+                    </div>
+                    <input type="search" wire:model.live.debounce.300ms="search" class="block w-full p-4 ps-11 text-sm text-gray-900 border border-gray-200 rounded-2xl bg-gray-50/50 focus:bg-white focus:ring-red-500 focus:border-red-500 shadow-sm transition-all focus:outline-none" placeholder="Buscar por título, género o director...">
+                </div>
+            </div>
+
             <!-- Tabs Estilo Medical Appointment (Underline) -->
             <div class="mb-8 border-b border-gray-200">
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center">
@@ -59,10 +69,38 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Póster</th>
-                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Título</th>
-                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Director</th>
-                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Año</th>
-                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Duración</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest cursor-pointer hover:text-gray-600 transition-colors select-none" wire:click="sortBy('title')">
+                                Título
+                                @if($sortBy === 'title')
+                                    <i class="fa-solid {{ $sortDir === 'asc' ? 'fa-sort-up' : 'fa-sort-down' }} ml-1 text-red-500"></i>
+                                @else
+                                    <i class="fa-solid fa-sort ml-1 text-gray-300"></i>
+                                @endif
+                            </th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest cursor-pointer hover:text-gray-600 transition-colors select-none" wire:click="sortBy('director')">
+                                Director
+                                @if($sortBy === 'director')
+                                    <i class="fa-solid {{ $sortDir === 'asc' ? 'fa-sort-up' : 'fa-sort-down' }} ml-1 text-red-500"></i>
+                                @else
+                                    <i class="fa-solid fa-sort ml-1 text-gray-300"></i>
+                                @endif
+                            </th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest cursor-pointer hover:text-gray-600 transition-colors select-none" wire:click="sortBy('release_year')">
+                                Año
+                                @if($sortBy === 'release_year')
+                                    <i class="fa-solid {{ $sortDir === 'asc' ? 'fa-sort-up' : 'fa-sort-down' }} ml-1 text-red-500"></i>
+                                @else
+                                    <i class="fa-solid fa-sort ml-1 text-gray-300"></i>
+                                @endif
+                            </th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest cursor-pointer hover:text-gray-600 transition-colors select-none" wire:click="sortBy('duration')">
+                                Duración
+                                @if($sortBy === 'duration')
+                                    <i class="fa-solid {{ $sortDir === 'asc' ? 'fa-sort-up' : 'fa-sort-down' }} ml-1 text-red-500"></i>
+                                @else
+                                    <i class="fa-solid fa-sort ml-1 text-gray-300"></i>
+                                @endif
+                            </th>
                             <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Acciones</th>
                         </tr>
                     </thead>
@@ -72,7 +110,14 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <img src="{{ Str::startsWith($movie->poster_url, 'http') ? $movie->poster_url : asset('storage/' . $movie->poster_url) }}" class="w-12 h-16 object-cover rounded shadow-sm border border-gray-100" alt="poster">
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-800">{{ $movie->title }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-800">
+                                    <span class="flex items-center gap-2">
+                                        {{ $movie->title }}
+                                        @if($movie->is_premiere)
+                                            <span class="bg-red-50 text-red-600 px-2 py-0.5 rounded-full text-[10px] font-black border border-red-200 uppercase tracking-widest animate-pulse" title="Película de Estreno"><i class="fa-solid fa-star mr-0.5"></i>Estreno</span>
+                                        @endif
+                                    </span>
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ $movie->director }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                     <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-bold">{{ $movie->release_year }}</span>
@@ -93,6 +138,11 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Paginación Premium -->
+            <div class="mt-6">
+                {{ $movies->links() }}
             </div>
         </div>
     </div>
