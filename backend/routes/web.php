@@ -28,4 +28,6 @@ Route::middleware([
     Route::get('/roles-admin', \App\Livewire\RoleManager::class)->name('roles.index');
     Route::get('/roles/create', \App\Livewire\RoleEditor::class)->name('roles.create');
     Route::get('/roles/{role}/edit', \App\Livewire\RoleEditor::class)->name('roles.edit');
+
+    Route::get('/reservations-admin', \App\Livewire\ReservationManager::class)->name('reservations.index');
 });

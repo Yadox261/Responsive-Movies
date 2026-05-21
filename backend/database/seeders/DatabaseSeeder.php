@@ -32,6 +32,16 @@ class DatabaseSeeder extends Seeder
             'phone_number' => '5500000001',
         ]);
 
+        // Crear usuario YaDoX
+        User::create([
+            'name'         => 'YaDoX',
+            'email'        => 'edgm0206@gmail.com',
+            'password'     => Hash::make('123456789'),
+            'role_id'      => 1,
+            'country_code' => '+52',
+            'phone_number' => '5500000000',
+        ]);
+
         // 4. Crear Editores (recibirán el reporte matutino)
         User::create([
             'name'         => 'Editor Principal',
