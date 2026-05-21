@@ -30,4 +30,6 @@ Route::middleware([
     Route::get('/roles/{role}/edit', \App\Livewire\RoleEditor::class)->name('roles.edit');
 
     Route::get('/reservations-admin', \App\Livewire\ReservationManager::class)->name('reservations.index');
+    Route::get('/reservations/create', \App\Livewire\ReservationEditor::class)->name('reservations.create');
+    Route::get('/reservations/{reservation}/edit', \App\Livewire\ReservationEditor::class)->name('reservations.edit');
 });
