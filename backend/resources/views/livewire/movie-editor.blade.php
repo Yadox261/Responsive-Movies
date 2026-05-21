@@ -101,7 +101,7 @@
                         <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Póster Vertical</label>
                         <div class="relative group">
                             <div class="w-full h-80 bg-gray-100 rounded-2xl flex items-center justify-center overflow-hidden border-2 border-dashed border-gray-200 group-hover:border-red-300 transition-colors">
-                                @if($poster)
+                                @if($poster && in_array(strtolower($poster->getClientOriginalExtension()), ['png', 'gif', 'bmp', 'svg', 'jpg', 'jpeg', 'webp', 'avif']))
                                     <img src="{{ $poster->temporaryUrl() }}" class="w-full h-full object-cover">
                                 @elseif($poster_url)
                                     <img src="{{ Str::startsWith($poster_url, 'http') ? $poster_url : asset('storage/'.$poster_url) }}" class="w-full h-full object-cover">
@@ -120,7 +120,7 @@
                         <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Banner Horizontal</label>
                         <div class="relative group">
                             <div class="w-full h-40 bg-gray-100 rounded-2xl flex items-center justify-center overflow-hidden border-2 border-dashed border-gray-200 group-hover:border-red-300 transition-colors">
-                                @if($banner)
+                                @if($banner && in_array(strtolower($banner->getClientOriginalExtension()), ['png', 'gif', 'bmp', 'svg', 'jpg', 'jpeg', 'webp', 'avif']))
                                     <img src="{{ $banner->temporaryUrl() }}" class="w-full h-full object-cover">
                                 @elseif($banner_url)
                                     <img src="{{ Str::startsWith($banner_url, 'http') ? $banner_url : asset('storage/'.$banner_url) }}" class="w-full h-full object-cover">

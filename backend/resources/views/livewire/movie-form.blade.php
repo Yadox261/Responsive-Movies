@@ -70,7 +70,7 @@
                             <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Póster (Vertical)</label>
                             <div class="flex items-center justify-center w-full">
                                 <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition-all overflow-hidden relative">
-                                    @if ($poster)
+                                    @if ($poster && in_array(strtolower($poster->getClientOriginalExtension()), ['png', 'gif', 'bmp', 'svg', 'jpg', 'jpeg', 'webp', 'avif']))
                                         <img src="{{ $poster->temporaryUrl() }}" class="absolute inset-0 w-full h-full object-cover">
                                     @elseif ($poster_url)
                                         <img src="{{ asset('storage/' . $poster_url) }}" class="absolute inset-0 w-full h-full object-cover">
@@ -89,7 +89,7 @@
                             <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Espectacular (Horizontal)</label>
                             <div class="flex items-center justify-center w-full">
                                 <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition-all overflow-hidden relative">
-                                    @if ($banner)
+                                    @if ($banner && in_array(strtolower($banner->getClientOriginalExtension()), ['png', 'gif', 'bmp', 'svg', 'jpg', 'jpeg', 'webp', 'avif']))
                                         <img src="{{ $banner->temporaryUrl() }}" class="absolute inset-0 w-full h-full object-cover">
                                     @elseif ($banner_url)
                                         <img src="{{ asset('storage/' . $banner_url) }}" class="absolute inset-0 w-full h-full object-cover">
