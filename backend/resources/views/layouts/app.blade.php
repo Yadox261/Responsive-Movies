@@ -57,6 +57,12 @@
                 'href' => route('roles.index'),
                 'active' => request()->routeIs('roles.index'),
             ],
+            [
+                'name' => 'Reservaciones',
+                'icon' => 'fa-solid fa-ticket',
+                'href' => route('reservations.index'),
+                'active' => request()->routeIs('reservations.index'),
+            ],
         ];
     @endphp
 
