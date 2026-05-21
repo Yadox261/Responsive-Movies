@@ -13,28 +13,48 @@
                 </a>
             </div>
 
+            @php
+                // Determinamos de antemano si cada sección contiene errores de validación
+                // para poder aplicar los estilos de error (texto e icono rojos) correspondientes.
+                $generalHasErrors = $errors->hasAny(['title', 'genre', 'release_year', 'synopsis']);
+                $multimediaHasErrors = $errors->hasAny(['poster', 'banner']);
+                $repartoHasErrors = $errors->hasAny(['director', 'cast', 'duration']);
+            @endphp
+
             <div class="mb-6 border-b border-gray-200">
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center">
                     <li class="me-2">
-                        <button type="button" wire:click="setTab('general')" class="inline-flex items-center p-4 border-b-2 rounded-t-lg transition-all {{ $activeTab == 'general' ? 'text-red-600 border-red-600 active font-bold' : 'text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300' }}">
+                        <button type="button" wire:click="setTab('general')" class="inline-flex items-center p-4 border-b-2 rounded-t-lg transition-all 
+                            {{ $generalHasErrors 
+                                ? ($activeTab == 'general' ? 'text-red-600 border-red-600 active font-bold' : 'text-red-500 border-red-300 hover:text-red-600 hover:border-red-400 font-bold bg-red-50/10') 
+                                : ($activeTab == 'general' ? 'text-red-600 border-red-600 active font-bold' : 'text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300') 
+                            }}">
                             <i class="fa-solid fa-circle-info mr-2"></i> General
-                            @if ($errors->hasAny(['title', 'genre', 'release_year', 'synopsis']))
+                            @if ($generalHasErrors)
                                 <i class="fa-solid fa-circle-exclamation text-red-600 animate-bounce ml-2 text-base shadow-sm" title="Esta sección contiene errores"></i>
                             @endif
                         </button>
                     </li>
                     <li class="me-2">
-                        <button type="button" wire:click="setTab('multimedia')" class="inline-flex items-center p-4 border-b-2 rounded-t-lg transition-all {{ $activeTab == 'multimedia' ? 'text-red-600 border-red-600 active font-bold' : 'text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300' }}">
+                        <button type="button" wire:click="setTab('multimedia')" class="inline-flex items-center p-4 border-b-2 rounded-t-lg transition-all 
+                            {{ $multimediaHasErrors 
+                                ? ($activeTab == 'multimedia' ? 'text-red-600 border-red-600 active font-bold' : 'text-red-500 border-red-300 hover:text-red-600 hover:border-red-400 font-bold bg-red-50/10') 
+                                : ($activeTab == 'multimedia' ? 'text-red-600 border-red-600 active font-bold' : 'text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300') 
+                            }}">
                             <i class="fa-solid fa-photo-film mr-2"></i> Multimedia
-                            @if ($errors->hasAny(['poster', 'banner']))
+                            @if ($multimediaHasErrors)
                                 <i class="fa-solid fa-circle-exclamation text-red-600 animate-bounce ml-2 text-base shadow-sm" title="Esta sección contiene errores"></i>
                             @endif
                         </button>
                     </li>
                     <li class="me-2">
-                        <button type="button" wire:click="setTab('reparto')" class="inline-flex items-center p-4 border-b-2 rounded-t-lg transition-all {{ $activeTab == 'reparto' ? 'text-red-600 border-red-600 active font-bold' : 'text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300' }}">
+                        <button type="button" wire:click="setTab('reparto')" class="inline-flex items-center p-4 border-b-2 rounded-t-lg transition-all 
+                            {{ $repartoHasErrors 
+                                ? ($activeTab == 'reparto' ? 'text-red-600 border-red-600 active font-bold' : 'text-red-500 border-red-300 hover:text-red-600 hover:border-red-400 font-bold bg-red-50/10') 
+                                : ($activeTab == 'reparto' ? 'text-red-600 border-red-600 active font-bold' : 'text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300') 
+                            }}">
                             <i class="fa-solid fa-user-group mr-2"></i> Reparto y Detalles
-                            @if ($errors->hasAny(['director', 'cast', 'duration']))
+                            @if ($repartoHasErrors)
                                 <i class="fa-solid fa-circle-exclamation text-red-600 animate-bounce ml-2 text-base shadow-sm" title="Esta sección contiene errores"></i>
                             @endif
                         </button>
@@ -114,6 +134,7 @@
                                 </div>
                             </div>
                         </div>
+                        @error('poster') <span class="text-red-500 text-xs mt-2 font-bold block">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="space-y-6">
@@ -133,6 +154,7 @@
                                 </div>
                             </div>
                         </div>
+                        @error('banner') <span class="text-red-500 text-xs mt-2 font-bold block">{{ $message }}</span> @enderror
                         <p class="text-xs text-gray-400 italic">Recomendado: 1920x1080px para mejor visualización.</p>
                     </div>
                 </div>
@@ -396,4 +418,37 @@
             </form>
         </div>
     </div>
+
+    {{-- Script de JS para el manejo de la validación y el scroll automático al error --}}
+    <script>
+        window.addEventListener('validation-failed', () => {
+            // Un pequeño retraso para permitir que Livewire actualice el DOM al cambiar de pestaña
+            setTimeout(() => {
+                // Buscamos el primer mensaje de error visible
+                const firstError = document.querySelector('.text-red-500');
+                if (firstError) {
+                    // Encontramos el contenedor del input
+                    const container = firstError.closest('div');
+                    if (container) {
+                        // Buscamos la etiqueta del campo
+                        const label = container.querySelector('label');
+                        if (label) {
+                            // Hacemos scroll suave centrado hacia la etiqueta
+                            label.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            
+                            // Intentamos enfocar el campo correspondiente
+                            const input = container.querySelector('input, textarea, select');
+                            if (input) {
+                                input.focus();
+                            }
+                        } else {
+                            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    } else {
+                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            }, 150);
+        });
+    </script>
 </div>

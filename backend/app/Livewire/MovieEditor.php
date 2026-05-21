@@ -265,15 +265,40 @@ class MovieEditor extends Component
 
     public function save()
     {
-        $this->validate([
-            'title' => 'required',
-            'director' => 'required',
-            'release_year' => 'required|numeric',
-            'genre' => 'required',
-            'synopsis' => 'required',
-            'poster' => 'nullable|image|max:2048',
-            'banner' => 'nullable|image|max:2048',
-        ]);
+        // Usamos un bloque try-catch para capturar los errores de validación
+        // y poder redirigir al usuario automáticamente a la pestaña correspondiente.
+        try {
+            $this->validate([
+                'title' => 'required',
+                'director' => 'required',
+                'release_year' => 'required|numeric',
+                'genre' => 'required',
+                'synopsis' => 'required',
+                'poster' => 'nullable|image|max:2048',
+                'banner' => 'nullable|image|max:2048',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $errors = $e->validator->errors();
+            
+            // Si hay errores en los campos de la sección General, activamos esa pestaña
+            if ($errors->hasAny(['title', 'genre', 'release_year', 'synopsis'])) {
+                $this->activeTab = 'general';
+            }
+            // Si no, si hay errores en la sección Multimedia, activamos esa pestaña
+            elseif ($errors->hasAny(['poster', 'banner'])) {
+                $this->activeTab = 'multimedia';
+            }
+            // Si no, si hay errores en la sección de Reparto, activamos esa pestaña
+            elseif ($errors->hasAny(['director'])) {
+                $this->activeTab = 'reparto';
+            }
+
+            // Despachamos un evento al navegador para que el script de JS haga scroll automático
+            $this->dispatch('validation-failed');
+
+            // Volvemos a lanzar la excepción para que Livewire pinte los errores en la vista
+            throw $e;
+        }
 
         $data = [
             'title' => $this->title,
