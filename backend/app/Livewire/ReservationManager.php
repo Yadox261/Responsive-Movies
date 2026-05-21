@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Reservation;
 use Livewire\WithPagination;
 
+<<<<<<< HEAD
 /**
  * Clase ReservationManager (Componente Livewire)
  * -----------------------------------------------
@@ -38,11 +39,22 @@ class ReservationManager extends Component
      * Reinicia el puntero de la paginación a la primera hoja para evitar que una búsqueda
      * con pocos resultados quede oculta si el usuario estaba en la página 3 o superior.
      */
+=======
+class ReservationManager extends Component
+{
+    use WithPagination;
+
+    public $search = '';
+
+    protected $listeners = ['deleteReservation' => 'delete'];
+
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
     public function updatingSearch()
     {
         $this->resetPage();
     }
 
+<<<<<<< HEAD
     /**
      * Método Renderizador Principal
      * ------------------------------
@@ -55,6 +67,12 @@ class ReservationManager extends Component
         $reservations = Reservation::with(['movie', 'schedule'])
             ->where(function ($query) {
                 // Filtro dinámico multidominio sobre datos del cliente o título de la película
+=======
+    public function render()
+    {
+        $reservations = Reservation::with(['movie', 'schedule'])
+            ->where(function ($query) {
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
                 $query->where('name', 'like', '%' . $this->search . '%')
                       ->orWhere('email', 'like', '%' . $this->search . '%')
                       ->orWhere('phone', 'like', '%' . $this->search . '%')
@@ -62,6 +80,7 @@ class ReservationManager extends Component
                           $q->where('title', 'like', '%' . $this->search . '%');
                       });
             })
+<<<<<<< HEAD
             // Mantiene el orden cronológico descendente (las más recientes primero)
             ->orderBy('created_at', 'desc')
             // Paginación eficiente directamente desde MySQL a nivel servidor (10 registros por página)
@@ -80,6 +99,14 @@ class ReservationManager extends Component
      * 
      * @param int $id ID de la reservación a cancelar.
      */
+=======
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('livewire.reservation-manager', compact('reservations'))->layout('layouts.app');
+    }
+
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
     public function confirmDelete($id)
     {
         $this->dispatch('swal:confirm', [
@@ -91,6 +118,7 @@ class ReservationManager extends Component
         ]);
     }
 
+<<<<<<< HEAD
     /**
      * Eliminación de Reservación
      * ---------------------------
@@ -98,14 +126,20 @@ class ReservationManager extends Component
      * 
      * @param int $id ID del registro en MySQL.
      */
+=======
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
     public function delete($id)
     {
         $reservation = Reservation::find($id);
         if ($reservation) {
+<<<<<<< HEAD
             // Borra la fila correspondiente de la tabla 'reservations'
             $reservation->delete();
             
             // Notifica al frontend con SweetAlert2 para reportar éxito de la transacción
+=======
+            $reservation->delete();
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
             $this->dispatch('swal:modal', [
                 'title' => '¡Cancelada!',
                 'text' => 'La reservación ha sido cancelada y eliminada con éxito.',

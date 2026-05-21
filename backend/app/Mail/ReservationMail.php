@@ -10,6 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+<<<<<<< HEAD
 /**
  * Clase ReservationMail (Mailable de Laravel)
  * --------------------------------------------
@@ -41,6 +42,17 @@ class ReservationMail extends Mailable
      * 
      * @param Reservation $reservation Instancia del modelo guardado en MySQL.
      * @param string $pdfContent Contenido en bytes del boleto PDF.
+=======
+class ReservationMail extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public Reservation $reservation;
+    public $pdfContent;
+
+    /**
+     * Create a new message instance.
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
      */
     public function __construct(Reservation $reservation, $pdfContent)
     {
@@ -49,10 +61,14 @@ class ReservationMail extends Mailable
     }
 
     /**
+<<<<<<< HEAD
      * Definición del Sobre del Correo (Envelope)
      * ------------------------------------------
      * Retorna la configuración básica del envío como el asunto del email,
      * incorporando dinámicamente el nombre de la película reservada.
+=======
+     * Get the message envelope.
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
      */
     public function envelope(): Envelope
     {
@@ -64,10 +80,14 @@ class ReservationMail extends Mailable
     }
 
     /**
+<<<<<<< HEAD
      * Definición del Cuerpo/Contenido (Content)
      * ------------------------------------------
      * Indica la ruta de la vista Blade que servirá como plantilla HTML para el
      * correo electrónico ('emails.reservation_confirmation').
+=======
+     * Get the message content definition.
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
      */
     public function content(): Content
     {
@@ -77,17 +97,25 @@ class ReservationMail extends Mailable
     }
 
     /**
+<<<<<<< HEAD
      * Adjuntos del Correo (Attachments)
      * ---------------------------------
      * Utiliza la API 'Attachment::fromData' para inyectar directamente el flujo
      * binario del PDF desde la memoria RAM del servidor como un archivo adjunto descargable,
      * sin necesidad de escribir en el sistema de archivos del servidor (reduciendo la latencia de I/O).
      * 
+=======
+     * Get the attachments for the message.
+     *
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
      * @return array<int, \Illuminate\Mail\Mailables\Attachment>
      */
     public function attachments(): array
     {
+<<<<<<< HEAD
         // Genera un slug seguro y limpio para nombrar el archivo PDF del boleto
+=======
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
         $movieSlug = \Illuminate\Support\Str::slug($this->reservation->movie->title ?? 'pelicula');
 
         return [

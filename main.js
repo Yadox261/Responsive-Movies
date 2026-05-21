@@ -23,9 +23,13 @@ async function fetchMovies() {
     // Realiza la petición GET asíncrona al backend
     const response = await fetch(API_URL);
     const movies = await response.json();
+<<<<<<< HEAD
     
     // Almacena de forma global las películas recibidas para poder leer sus horarios rápidamente en el modal sin re-consultar
     window.activeMovies = movies;
+=======
+    window.activeMovies = movies; // Almacenar globalmente para usar en las reservaciones
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
 
     // Obtención de contenedores HTML del DOM
     const homeWrapper = document.getElementById("home-wrapper");
@@ -159,6 +163,7 @@ window.addEventListener('scroll', () => {
 // LÓGICA DEL MODAL DE RESERVACIONES
 // ==========================================
 
+<<<<<<< HEAD
 /**
  * Abre el Modal y Pobla Horarios
  * ------------------------------
@@ -167,15 +172,25 @@ window.addEventListener('scroll', () => {
  * 
  * @param {number} movieId ID único de la película.
  */
+=======
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
 window.openReservationModal = function(movieId) {
   const movie = window.activeMovies.find(m => m.id === movieId);
   if (!movie) return;
 
+<<<<<<< HEAD
   // Asigna valores ocultos de referencia en el formulario
   document.getElementById("reserve-movie-id").value = movie.id;
   document.getElementById("modal-movie-title").innerHTML = `Película: <span style="color: #ff6600;">${movie.title}</span>`;
 
   // Pobla los horarios disponibles en el combo
+=======
+  // Llenar datos de la película
+  document.getElementById("reserve-movie-id").value = movie.id;
+  document.getElementById("modal-movie-title").innerHTML = `Película: <span style="color: #ff6600;">${movie.title}</span>`;
+
+  // Poblar los horarios disponibles
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
   const scheduleSelect = document.getElementById("reserve-schedule");
   scheduleSelect.innerHTML = "";
 
@@ -187,13 +202,17 @@ window.openReservationModal = function(movieId) {
       scheduleSelect.appendChild(option);
     });
   } else {
+<<<<<<< HEAD
     // Manejador en caso de que la película no posea horarios asignados aún
+=======
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
     const option = document.createElement("option");
     option.value = "";
     option.text = "Sin horarios disponibles";
     scheduleSelect.appendChild(option);
   }
 
+<<<<<<< HEAD
   // Resetea campos de formularios para eliminar datos de reservaciones previas
   document.getElementById("reservation-form").reset();
   
@@ -208,11 +227,28 @@ window.openReservationModal = function(movieId) {
 /**
  * Cierra el Modal
  */
+=======
+  // Resetear el formulario
+  document.getElementById("reservation-form").reset();
+  
+  // Mostrar formulario y ocultar tarjeta de éxito
+  document.getElementById("reservation-form-container").classList.remove("hidden");
+  document.getElementById("reservation-success-card").classList.add("hidden");
+
+  // Activar modal
+  document.getElementById("reservation-modal").classList.add("active");
+};
+
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
 window.closeReservationModal = function() {
   document.getElementById("reservation-modal").classList.remove("active");
 };
 
+<<<<<<< HEAD
 // Cierra de forma automática el modal al realizar un click en el fondo desenfocado (backdrop)
+=======
+// Cerrar modal al hacer clic fuera del contenido
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
 window.addEventListener("click", (e) => {
   const modal = document.getElementById("reservation-modal");
   if (e.target === modal) {
@@ -220,6 +256,7 @@ window.addEventListener("click", (e) => {
   }
 });
 
+<<<<<<< HEAD
 /**
  * Envío AJAX del Formulario de Reservación
  * -----------------------------------------
@@ -234,6 +271,11 @@ window.submitReservation = async function(event) {
   event.preventDefault(); // Previene la recarga clásica del navegador
 
   // Captura de valores de los inputs del DOM
+=======
+window.submitReservation = async function(event) {
+  event.preventDefault();
+
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
   const movieId = document.getElementById("reserve-movie-id").value;
   const scheduleId = document.getElementById("reserve-schedule").value;
   const name = document.getElementById("reserve-name").value;
@@ -241,13 +283,20 @@ window.submitReservation = async function(event) {
   const phoneInput = document.getElementById("reserve-phone").value;
   const seats = document.getElementById("reserve-seats").value;
 
+<<<<<<< HEAD
   // Validación de seguridad en cliente
+=======
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
   if (!scheduleId) {
     alert("Por favor selecciona una función con horario válido.");
     return;
   }
 
+<<<<<<< HEAD
   // Intercambio visual: Activa el spinner de carga y deshabilita el botón para evitar doble envío (double-submit protection)
+=======
+  // Activar spinner en botón de envío
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
   const submitBtn = document.getElementById("reserve-submit-btn");
   const btnText = submitBtn.querySelector(".btn-text");
   const btnSpinner = submitBtn.querySelector(".btn-spinner");
@@ -257,7 +306,11 @@ window.submitReservation = async function(event) {
   submitBtn.disabled = true;
 
   try {
+<<<<<<< HEAD
     // Despacho de la petición POST AJAX a la API del Servidor Laravel
+=======
+    // Realizar POST a la API del backend
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
     const response = await fetch("http://127.0.0.1:8000/api/reservations", {
       method: "POST",
       headers: {
@@ -269,7 +322,11 @@ window.submitReservation = async function(event) {
         schedule_id: parseInt(scheduleId),
         name: name,
         email: email,
+<<<<<<< HEAD
         phone: "+52" + phoneInput, // Agrega el prefijo mexicano automáticamente para UltraMsg
+=======
+        phone: "+52" + phoneInput, // Añadir código internacional de México automáticamente
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
         seats: parseInt(seats)
       })
     });
@@ -277,16 +334,27 @@ window.submitReservation = async function(event) {
     const result = await response.json();
 
     if (response.ok && result.success) {
+<<<<<<< HEAD
       // Inyecta dinámicamente los datos de la reservación guardada en la tarjeta de éxito
+=======
+      // Rellenar datos en la tarjeta de éxito
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
       document.getElementById("success-movie").innerText = result.data.movie;
       document.getElementById("success-datetime").innerText = `Día: ${result.data.day} | Hora: ${result.data.time}`;
       document.getElementById("success-seats").innerText = `${result.data.seats} boleto(s) reservado(s)`;
 
+<<<<<<< HEAD
       // Oculta el formulario de llenado y revela la tarjeta animada de confirmación de boleto
       document.getElementById("reservation-form-container").classList.add("hidden");
       document.getElementById("reservation-success-card").classList.remove("hidden");
     } else {
       // Muestra los errores devueltos por el validador del backend de Laravel
+=======
+      // Cambiar vistas en el modal
+      document.getElementById("reservation-form-container").classList.add("hidden");
+      document.getElementById("reservation-success-card").classList.remove("hidden");
+    } else {
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
       alert(result.message || "Ocurrió un error al procesar tu reservación.");
     }
 
@@ -294,12 +362,19 @@ window.submitReservation = async function(event) {
     console.error("Error de conexión:", error);
     alert("No se pudo conectar con el servidor. Verifica que el backend esté corriendo.");
   } finally {
+<<<<<<< HEAD
     // Ciclo Finalizador: Restaura el botón de envío ocultando el spinner
+=======
+    // Restaurar botón de envío
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
     btnText.classList.remove("hidden");
     btnSpinner.classList.add("hidden");
     submitBtn.disabled = false;
   }
 };
 
+<<<<<<< HEAD
 // Escucha la carga inicial completa del documento para detonar la llamada AJAX que pobla la cartelera
+=======
+>>>>>>> 20d4073506da474cc02fbff7b5d5ca3103efea7b
 document.addEventListener("DOMContentLoaded", fetchMovies);
