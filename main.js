@@ -82,8 +82,12 @@ async function fetchMovies() {
               <button class="movie-reserve-btn" onclick="openReservationModal(${movie.id})">Reservar</button>
           </div>`;
 
-      // Clasificación reactiva según año de estreno: Próximos estrenos vs Tendencias
-      if (parseInt(movie.release_year) > 2026) {
+      // Clasificación reactiva según año de estreno: Próximos estrenos (Coming Soon) vs Tendencias
+      // Va a Coming Soon si el año de estreno es en el futuro (> 2026) O si se estrena este año (2026) y todavía no tiene una duración definida.
+      const releaseYearInt = parseInt(movie.release_year);
+      const hasNoDuration = !movie.duration || String(movie.duration).toUpperCase() === 'N/A' || String(movie.duration).trim() === '';
+      
+      if (releaseYearInt > 2026 || (releaseYearInt === 2026 && hasNoDuration)) {
         comingHTML += movieBoxHTML;
       } else {
         trendingHTML += `

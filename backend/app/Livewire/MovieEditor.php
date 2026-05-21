@@ -137,8 +137,14 @@ class MovieEditor extends Component
             ->get();
 
         foreach ($existingSchedules as $existing) {
+            // Si la película asociada ha sido eliminada (o archivada/soft-deleted),
+            // su horario deja de estar activo y no representa una colisión real.
+            if (!$existing->movie) {
+                continue;
+            }
+
             if ($this->daysOverlap($this->new_day, $existing->day)) {
-                $exDuration = $this->parseDurationToMinutes($existing->movie?->duration);
+                $exDuration = $this->parseDurationToMinutes($existing->movie->duration);
                 list($exHours, $exMins) = explode(':', $existing->time);
                 $exStart = ($exHours * 60) + $exMins;
                 $exEnd = $exStart + $exDuration + 15;
@@ -149,7 +155,9 @@ class MovieEditor extends Component
                     $exEndMin = ($exStart + $exDuration) % 60;
                     $exEndStr = sprintf('%02d:%02d', $exEndHour, $exEndMin);
                     
-                    $conflictMsg = "¡Conflicto de Sala! La {$this->new_room} ya está ocupada por la película \"{$existing->movie->title}\" de {$exStartStr} a {$exEndStr} (más 15 min de limpieza) el día \"{$existing->day}\".";
+                    // Empleamos safe-navigation por seguridad y evitar cualquier crash futuro
+                    $movieTitle = $existing->movie->title ?? 'Película Eliminada';
+                    $conflictMsg = "¡Conflicto de Sala! La {$this->new_room} ya está ocupada por la película \"{$movieTitle}\" de {$exStartStr} a {$exEndStr} (más 15 min de limpieza) el día \"{$existing->day}\".";
                     $this->addError('new_time', $conflictMsg);
                     return;
                 }
